@@ -13,12 +13,14 @@ import gymnasium as gym
 
 from irlax.replayBuffers import ReplayBuffer
 
+
 def get_epsilon_greedy_action(model: nnx.Module, obs: jnp.ndarray, epsilon: Numeric) -> int:
     qVals = model(obs)
     a = rlax.epsilon_greedy(epsilon).sample(qVals)
     a = int(a[0])
 
     return a
+
 
 def loss_fn(model: nnx.Module, obs_tm1: list, a_tm1: jnp.ndarray, r_t: jnp.ndarray, discount_t: float,
     obs_t: list) -> jnp.ndarray:
@@ -32,12 +34,14 @@ def loss_fn(model: nnx.Module, obs_tm1: list, a_tm1: jnp.ndarray, r_t: jnp.ndarr
 
     return loss
 
+
 def learner_step(model: nnx.Module, optimizer: nnx.Optimizer, batch) -> jnp.ndarray:
     grad_fn = nnx.value_and_grad(loss_fn)
     loss, grad = grad_fn(model, *batch)
     optimizer.update(grad)
 
     return loss
+
 
 def run_episode(env: gym.Env, model: nnx.Module, replay_buffer: ReplayBuffer, epsilon_by_frame: optax.Schedule,
     nnx_optimizer: nnx.Optimizer, episode: int, step: int, target_period: int, discount_factor: float = 0.99,
@@ -64,8 +68,10 @@ def run_episode(env: gym.Env, model: nnx.Module, replay_buffer: ReplayBuffer, ep
 
     return episodic_reward, step
 
+
 def train_loop(env: gym.Env, model: nnx.Module, replay_buffer, optimizer: nnx.Optimizer, epsilon_by_frame:optax.Schedule,
     episode_count: int = 10000, target_period: int = 128, callbacks: list[Callable] = []) -> nnx.Module:
+
     '''
     Training loop for a DQN model
     env: gym.Env: The environment to train on

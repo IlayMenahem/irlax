@@ -6,7 +6,7 @@ import jax.numpy as jnp
 import rlax
 import gymnasium as gym
 
-## inference functions
+# inference functions
 def dqn_action(model: nnx.Module, obs: jnp.ndarray) -> int:
     model.eval()
 
@@ -16,7 +16,8 @@ def dqn_action(model: nnx.Module, obs: jnp.ndarray) -> int:
 
     return a
 
-## Evaluation functions
+
+# Evaluation functions
 def evaluate_episode(env: gym.Env, model: nnx.Module, step_limit: int = 50) -> float:
     obs, _ = env.reset()
     episode_reward: float = 0.0
@@ -31,12 +32,14 @@ def evaluate_episode(env: gym.Env, model: nnx.Module, step_limit: int = 50) -> f
 
     return episode_reward
 
+
 def evaluate(env: gym.Env, model: nnx.Module, num_episodes: int, step_limit: int = 50) -> jax.Array:
     model.eval()
     rewards = jnp.array([evaluate_episode(env, model, step_limit) for _ in range(num_episodes)])
     mean_reward = jnp.mean(rewards)
 
     return mean_reward
+
 
 def save_model(model: nnx.Module, chkp_dir: str, model_name: str) -> None:
     if not os.path.exists(chkp_dir):
@@ -47,6 +50,7 @@ def save_model(model: nnx.Module, chkp_dir: str, model_name: str) -> None:
 
     checkpointer = ocp.StandardCheckpointer()
     checkpointer.save(model_path, state, force=True)
+
 
 def load_model(model: nnx.Module, chkp_dir: str, model_name: str) -> nnx.Module:
     model_path = os.path.join(os.path.abspath(chkp_dir), model_name)
