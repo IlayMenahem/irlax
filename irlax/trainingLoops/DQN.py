@@ -1,7 +1,7 @@
 '''
 This module contains the training loop for a DQN
 '''
-
+from typing import Callable
 from flax import nnx
 import jax
 import jax.numpy as jnp
@@ -65,7 +65,7 @@ def run_episode(env: gym.Env, model: nnx.Module, replay_buffer: ReplayBuffer, ep
     return episodic_reward, step
 
 def train_loop(env: gym.Env, model: nnx.Module, replay_buffer, optimizer: nnx.Optimizer, epsilon_by_frame:optax.Schedule,
-    episode_count: int = 10000, target_period: int = 128, callbacks: list[callable] = []) -> nnx.Module:
+    episode_count: int = 10000, target_period: int = 128, callbacks: list[Callable] = []) -> nnx.Module:
     '''
     Training loop for a DQN model
     env: gym.Env: The environment to train on

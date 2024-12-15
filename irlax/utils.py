@@ -1,6 +1,7 @@
 import os
 import orbax.checkpoint as ocp
 from flax import nnx
+import jax
 import jax.numpy as jnp
 import rlax
 import gymnasium as gym
@@ -23,7 +24,7 @@ def evaluate_episode(env: gym.Env, model: nnx.Module, step_limit: int = 50) -> f
     for _ in range(step_limit):
         action = dqn_action(model, obs)
         obs, reward, done, truncated, _ = env.step(action)
-        episode_reward += reward
+        episode_reward += float(reward)
 
         if done or truncated:
             break
