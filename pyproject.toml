@@ -1,0 +1,29 @@
+[build-system]
+requires = [
+    "hatchling",
+    "jax",
+    "flax>=0.8.3",
+    "chex",
+    "tqdm",
+    "optax",
+    "gymnasium",
+    "orbax",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "irlax"
+version = "0.0.1"
+authors = [{ name = "ilay menachem", email = "ilay.menahem@outlook.com" }]
+description = "a simple and customizable library for training RL and imitation learning models using flax"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/IlayMenahem/irlax"
+Issues = "https://github.com/IlayMenahem/irlax/issues"
